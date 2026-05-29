@@ -1,298 +1,149 @@
-\# DDoS Traffic Detector
+# DDoS Traffic Detector
 
-
-
-\## Overview
-
-
-
-This project implements a machine learning and deep learning based DDoS traffic detection system using network traffic flow features extracted from a cybersecurity dataset.
-
-
+A machine learning and deep learning based DDoS traffic detection project using network flow features extracted from traffic data.
 
 The project compares:
 
+* Random Forest
+* LSTM
 
+to study the difference between static traffic classification and sequential traffic behavior learning.
 
-\* Random Forest (traditional machine learning)
+---
 
-\* LSTM (sequential deep learning)
+## Dataset
 
+* Source: Kaggle network traffic dataset
+* Original dataset size: ~1.5 million rows
+* Dataset format: CSV traffic flow data
 
+The dataset was:
 
-to analyze the difference between static traffic classification and temporal traffic behavior learning.
+* cleaned
+* balanced
+* chronologically sorted
+* feature engineered
 
+before training.
 
+---
 
-\---
+## Feature Engineering
 
+Additional features created:
 
+* `Packet_Rate`
+* `Time_Diff`
 
-\## Dataset
+Other traffic statistics and TCP flag based features were also used.
 
+---
 
+## Features Used
 
-\* Source: Kaggle Network Traffic Dataset
+* Total Fwd Packets
+* Total Backward Packets
+* Flow Duration
+* Flow Bytes/s
+* Flow Packets/s
+* Flow IAT Mean
+* Flow IAT Std
+* Flow IAT Max
+* Packet Length Mean
+* Packet Length Std
+* Fwd Packets/s
+* Bwd Packets/s
+* SYN Flag Count
+* ACK Flag Count
+* Packet_Rate
+* Time_Diff
 
-\* Original dataset size: \~1.5 million rows
+---
 
-\* Dataset type: Static CSV network flow dataset
+## Models
 
+### Random Forest
 
+Traditional machine learning model that classifies individual traffic flows using handcrafted features.
 
-The dataset was preprocessed, cleaned, balanced, and sorted chronologically before training.
+### LSTM
 
+Sequential deep learning model that learns temporal behavior across consecutive traffic flows.
 
+---
 
-\---
+## Random Forest vs LSTM
 
+| Random Forest         | LSTM                       |
+| --------------------- | -------------------------- |
+| Static learning       | Sequential learning        |
+| Faster training       | Slower training            |
+| Interpretable         | Temporal memory            |
+| Good for tabular data | Good for sequence behavior |
 
+---
 
-\## Feature Engineering
+## Technologies Used
 
+* Python
+* Pandas
+* NumPy
+* Scikit-learn
+* TensorFlow / Keras
 
+---
 
-Additional engineered features were created to improve attack detection:
+## Files
 
+```text id="zwf6s2"
+prepare_data.py     -> preprocessing and feature engineering
+random_forest.py    -> Random Forest model
+lstm.py             -> LSTM model
+```
 
+---
 
-\* Packet\_Rate
+## Running the Project
 
-\* Time\_Diff
+Install dependencies:
 
-\* Flow statistics
-
-\* Packet timing features
-
-\* TCP flag behavior
-
-
-
-Important preprocessing steps included:
-
-
-
-\* Timestamp sorting
-
-\* Infinite value handling
-
-\* Missing value cleaning
-
-\* Dataset balancing
-
-\* Temporal sequence generation for LSTM
-
-
-
-\---
-
-
-
-\## Features Used
-
-
-
-\* Total Fwd Packets
-
-\* Total Backward Packets
-
-\* Flow Duration
-
-\* Flow Bytes/s
-
-\* Flow Packets/s
-
-\* Flow IAT Mean
-
-\* Flow IAT Std
-
-\* Flow IAT Max
-
-\* Packet Length Mean
-
-\* Packet Length Std
-
-\* Fwd Packets/s
-
-\* Bwd Packets/s
-
-\* SYN Flag Count
-
-\* ACK Flag Count
-
-\* Packet\_Rate
-
-\* Time\_Diff
-
-
-
-\---
-
-
-
-\## Models Used
-
-
-
-\### Random Forest
-
-
-
-The Random Forest model analyzes individual network flows independently using handcrafted statistical traffic features.
-
-
-
-\### LSTM
-
-
-
-The LSTM model analyzes sequential traffic behavior by learning temporal dependencies across consecutive traffic flows.
-
-
-
-\---
-
-
-
-\## Key Difference Between RF and LSTM
-
-
-
-\* Random Forest learns static feature relationships from individual flows.
-
-\* LSTM learns temporal traffic behavior across sequences of flows.
-
-
-
-This allows the LSTM model to potentially capture evolving attack patterns and sequential anomalies.
-
-
-
-\---
-
-
-
-\## Technologies Used
-
-
-
-\* Python
-
-\* Pandas
-
-\* NumPy
-
-\* Scikit-learn
-
-\* TensorFlow / Keras
-
-
-
-\---
-
-
-
-\## Files
-
-
-
-\* `prepare\_data.py` → preprocessing and feature engineering
-
-\* `random\_forest.py` → Random Forest model
-
-\* `lstm.py` → LSTM model
-
-
-
-\---
-
-
-
-\## How to Run
-
-
-
-\### 1. Install dependencies
-
-
-
-```bash
-
+```bash id="zjlwm2"
 pip install -r requirements.txt
-
 ```
 
+Run preprocessing:
 
-
-\### 2. Run preprocessing
-
-
-
-```bash
-
-python prepare\_data.py
-
+```bash id="8jlwm9"
+python prepare_data.py
 ```
 
+Train Random Forest:
 
-
-\### 3. Train Random Forest
-
-
-
-```bash
-
-python random\_forest.py
-
+```bash id="2jlwm8"
+python random_forest.py
 ```
 
+Train LSTM:
 
-
-\### 4. Train LSTM
-
-
-
-```bash
-
+```bash id="8jlwm2"
 python lstm.py
-
 ```
 
+---
 
+## Future Improvements
 
-\---
+* Real-time packet capture
+* Live traffic analysis
+* ROC-AUC evaluation
+* Hyperparameter tuning
+* Flask/FastAPI deployment
 
+---
 
+## Goal
 
-\## Future Improvements
-
-
-
-\* Real-time packet capture integration
-
-\* Live traffic monitoring
-
-\* Hyperparameter tuning
-
-\* Confusion matrix visualization
-
-\* ROC-AUC analysis
-
-\* Model deployment using Flask or FastAPI
-
-\* Docker containerization
-
-
-
-\---
-
-
-
-\## Project Goal
-
-
-
-The goal of this project is to explore how traditional machine learning and sequential deep learning models behave on network traffic data for DDoS attack detection.
+The goal of this project is to compare traditional machine learning and sequential deep learning approaches for DDoS traffic detection using engineered network traffic features.
 
 
 
